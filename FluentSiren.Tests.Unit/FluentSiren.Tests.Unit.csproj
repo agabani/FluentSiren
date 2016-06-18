@@ -4,11 +4,11 @@
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProjectGuid>{57AFB757-B9CF-4630-A21B-5F9986ECBE8B}</ProjectGuid>
+    <ProjectGuid>{F7F61664-126D-4A84-9963-A655DDC61D1C}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>FluentSiren</RootNamespace>
-    <AssemblyName>FluentSiren</AssemblyName>
+    <RootNamespace>FluentSiren.Tests.Unit</RootNamespace>
+    <AssemblyName>FluentSiren.Tests.Unit</AssemblyName>
     <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
   </PropertyGroup>
@@ -30,25 +30,26 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="nunit.framework, Version=3.2.1.0, Culture=neutral, PublicKeyToken=2638cd05610744eb, processorArchitecture=MSIL">
+      <HintPath>..\packages\NUnit.3.2.1\lib\net45\nunit.framework.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Builders\ActionBuilder.cs" />
-    <Compile Include="Builders\EmbeddedLinkBuilder.cs" />
-    <Compile Include="Builders\EmbeddedRepresentationBuilder.cs" />
-    <Compile Include="Builders\EntityBuilder.cs" />
-    <Compile Include="Builders\FieldBuilder.cs" />
-    <Compile Include="Builders\LinkBuilder.cs" />
-    <Compile Include="Builders\SubEntityBuilder.cs" />
-    <Compile Include="Models\Action.cs" />
-    <Compile Include="Models\Entity.cs" />
-    <Compile Include="Models\Field.cs" />
-    <Compile Include="Models\Link.cs" />
-    <Compile Include="Models\SubEntity.cs" />
+    <Compile Include="Builders\FieldBuilderTests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <None Include="packages.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\FluentSiren\FluentSiren.csproj">
+      <Project>{57afb757-b9cf-4630-a21b-5f9986ecbe8b}</Project>
+      <Name>FluentSiren</Name>
+    </ProjectReference>
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

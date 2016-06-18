@@ -66,10 +66,10 @@ namespace FluentSiren.Builders
         public Action Build()
         {
             if (string.IsNullOrEmpty(_name))
-                throw new ArgumentException("Name is required");
+                throw new ArgumentException("Name is required.");
 
             if (string.IsNullOrEmpty(_href))
-                throw new ArgumentException("Href is required");
+                throw new ArgumentException("Href is required.");
 
             var action = new Action
             {
@@ -78,11 +78,11 @@ namespace FluentSiren.Builders
                 Method = !string.IsNullOrEmpty(_method) ? _method : "GET",
                 Href = _href,
                 Title = _title,
-                Type = !string.IsNullOrEmpty(_type) ? _type : "application/x-www-form-urlencoded",
+                Type = !string.IsNullOrEmpty(_type) ? _type : _fieldBuilders != null ? "application/x-www-form-urlencoded" : null,
                 Fields = _fieldBuilders?.Select(x => x.Build()).ToArray()
             };
 
-            if (new HashSet<string>(action.Fields.Select(x => x.Name)).Count != action.Fields.Count)
+            if (action.Fields != null && new HashSet<string>(action.Fields.Select(x => x.Name)).Count != action.Fields.Count)
                 throw new ArgumentException("Field names MUST be unique within the set of fields for an action.");
 
             return action;

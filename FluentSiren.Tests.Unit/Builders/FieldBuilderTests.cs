@@ -23,14 +23,14 @@ namespace FluentSiren.Tests.Unit.Builders
                 .WithName("name")
                 .WithClass("class 1")
                 .WithClass("class 2")
-                .WithType("number")
+                .WithType("type")
                 .WithValue("value")
                 .WithTitle("title")
                 .Build();
 
             Assert.That(field.Name, Is.EqualTo("name"));
             Assert.That(field.Class.Select(x => x), Is.EqualTo(new [] {"class 1", "class 2"}));
-            Assert.That(field.Type, Is.EqualTo("number"));
+            Assert.That(field.Type, Is.EqualTo("type"));
             Assert.That(field.Value, Is.EqualTo("value"));
             Assert.That(field.Title, Is.EqualTo("title"));
         }

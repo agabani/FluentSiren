@@ -6,6 +6,7 @@ __Current specification version: 0.6.1__
 - [![Build status](https://ci.appveyor.com/api/projects/status/wjsu38ekwr5593r3/branch/master?svg=true)](https://ci.appveyor.com/project/AhmedAgabani/fluentsiren/branch/master)
 
 ## Example
+Below is a C# example that builds the JSON Siren example found on the [Offical Siren Specification](https://github.com/kevinswiber/siren).
 ```csharp
 var entity = new EntityBuilder()
 	.WithClass("order")

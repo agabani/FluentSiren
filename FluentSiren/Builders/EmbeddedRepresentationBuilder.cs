@@ -80,7 +80,7 @@ namespace FluentSiren.Builders
             if (_rel == null || !_rel.Any())
                 throw new ArgumentException("Rel is required.");
 
-            return new SubEntity
+            var subEntity = new SubEntity
             {
                 Class = _class?.ToArray(),
                 Rel = _rel?.ToArray(),
@@ -90,6 +90,11 @@ namespace FluentSiren.Builders
                 Actions = _actionBuilders?.Select(x => x.Build()).ToArray(),
                 Title = _title
             };
+
+            if (subEntity.Actions != null && new HashSet<string>(subEntity.Actions.Select(x => x.Name)).Count != subEntity.Actions.Count)
+                throw new ArgumentException("Action names MUST be unique within the set of actions for an entity.");
+
+            return subEntity;
         }
     }
 }

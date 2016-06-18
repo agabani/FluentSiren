@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using FluentSiren.Models;
 
@@ -66,7 +67,7 @@ namespace FluentSiren.Builders
 
         public Entity Build()
         {
-            return new Entity
+            var entity = new Entity
             {
                 Class = _class?.ToArray(),
                 Properties = _properties?.ToDictionary(kvp => kvp.Key, kvp => kvp.Value),
@@ -75,6 +76,11 @@ namespace FluentSiren.Builders
                 Actions = _actionBuilders?.Select(x => x.Build()).ToArray(),
                 Title = _title
             };
+
+            if (entity.Actions != null && new HashSet<string>(entity.Actions.Select(x => x.Name)).Count != entity.Actions.Count)
+                throw new ArgumentException("Action names MUST be unique within the set of actions for an entity.");
+
+            return entity;
         }
     }
 }

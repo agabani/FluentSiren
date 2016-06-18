@@ -52,8 +52,14 @@ var entity = new EntityBuilder()
 		.WithRel("next")
 		.WithHref("http://api.x.io/orders/43"))
 	.Build();
-	
-Console.WriteLine(JsonConvert.SerializeObject(entity, Formatting.Indented, new JsonSerializerSettings {ContractResolver = new CamelCasePropertyNamesContractResolver(), NullValueHandling = NullValueHandling.Ignore}));
+
+var json = JsonConvert.SerializeObject(entity, Formatting.Indented, new JsonSerializerSettings
+{
+	ContractResolver = new CamelCasePropertyNamesContractResolver(),
+	NullValueHandling = NullValueHandling.Ignore
+});
+
+Console.WriteLine(json);			
 ```
 
 ```json

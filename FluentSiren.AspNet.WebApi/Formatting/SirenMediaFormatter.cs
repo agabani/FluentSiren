@@ -31,7 +31,7 @@ namespace FluentSiren.AspNet.WebApi.Formatting
         {
             var serializeObject = SerializeObject(value);
 
-            var bytes = GetBytes(serializeObject);
+            var bytes = Encoding.UTF8.GetBytes(serializeObject);
 
             return writeStream.WriteAsync(bytes, 0, bytes.Length);
         }
@@ -40,7 +40,7 @@ namespace FluentSiren.AspNet.WebApi.Formatting
         {
             var serializeObject = SerializeObject(value);
 
-            var bytes = GetBytes(serializeObject);
+            var bytes = Encoding.UTF8.GetBytes(serializeObject);
 
             return writeStream.WriteAsync(bytes, 0, bytes.Length, cancellationToken);
         }
@@ -48,11 +48,6 @@ namespace FluentSiren.AspNet.WebApi.Formatting
         private string SerializeObject(object value)
         {
             return JsonConvert.SerializeObject(value, _jsonSerializerSettings);
-        }
-
-        private static byte[] GetBytes(string serializeObject)
-        {
-            return Encoding.UTF8.GetBytes(serializeObject);
         }
 
         public override bool CanReadType(Type type)

@@ -161,9 +161,9 @@ Console.WriteLine(json);
 
 ## WebApi
 
-To use FluentSiren in a WebApi project install FluentSiren.AspNet.WebApi package through the "NuGet Package Manager" or the "Package Manager Console" by typing the following command `install-package FluentSiren.AspNet.WebApi`
+To use FluentSiren in a WebApi project, install FluentSiren.AspNet.WebApi package through "NuGet Package Manager" or "Package Manager Console" by typing the following command `install-package FluentSiren.AspNet.WebApi`
 
-Once the package is installed, add `config.Formatters.Add(new SirenMediaFormatter());` to your `WebApiConfig.cs` as shown in the example below.
+Once the package(s) are installed, add `config.Formatters.Add(new SirenMediaFormatter());` to your `WebApiConfig.cs` as shown in the example below.
 
 ```csharp
 using System.Web.Http;

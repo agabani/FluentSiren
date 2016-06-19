@@ -7,6 +7,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FluentSiren", "FluentSiren\
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FluentSiren.Tests.Unit", "FluentSiren.Tests.Unit\FluentSiren.Tests.Unit.csproj", "{F7F61664-126D-4A84-9963-A655DDC61D1C}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FluentSiren.AspNet.WebApi", "FluentSiren.AspNet.WebApi\FluentSiren.AspNet.WebApi.csproj", "{236C43B3-6740-4AB9-A6BC-5C5E5D93DE06}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -21,6 +23,10 @@ Global
 		{F7F61664-126D-4A84-9963-A655DDC61D1C}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{F7F61664-126D-4A84-9963-A655DDC61D1C}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{F7F61664-126D-4A84-9963-A655DDC61D1C}.Release|Any CPU.Build.0 = Release|Any CPU
+		{236C43B3-6740-4AB9-A6BC-5C5E5D93DE06}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{236C43B3-6740-4AB9-A6BC-5C5E5D93DE06}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{236C43B3-6740-4AB9-A6BC-5C5E5D93DE06}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{236C43B3-6740-4AB9-A6BC-5C5E5D93DE06}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

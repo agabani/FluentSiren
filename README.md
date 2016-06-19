@@ -4,6 +4,7 @@ __Current specification version: 0.6.1__
 
 - [Offical Siren Specification](https://github.com/kevinswiber/siren)
 - [![Build status](https://ci.appveyor.com/api/projects/status/wjsu38ekwr5593r3/branch/master?svg=true)](https://ci.appveyor.com/project/AhmedAgabani/fluentsiren/branch/master)
+- [![NuGet downloads](https://img.shields.io/badge/nuget-v0.6.1.0-blue.svg)](https://www.nuget.org/packages/FluentSiren)
 
 ## Example
 Below is a C# example that builds the JSON Siren example found on the [Offical Siren Specification](https://github.com/kevinswiber/siren).

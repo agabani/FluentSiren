@@ -158,3 +158,36 @@ Console.WriteLine(json);
   ]
 }
 ```
+
+## WebApi
+
+To use FluentSiren in a WebApi project install FluentSiren.AspNet.WebApi package through the "NuGet Package Manager" or the "Package Manager Console" by typing the following command `install-package FluentSiren.AspNet.WebApi`
+
+Once the package is installed, add `config.Formatters.Add(new SirenMediaFormatter());` to your `WebApiConfig.cs` as shown in the example below.
+
+```csharp
+using System.Web.Http;
+using FluentSiren.AspNet.WebApi.Formatting;
+
+namespace Demo.Api
+{
+    public static class WebApiConfig
+    {
+        public static void Register(HttpConfiguration config)
+        {
+            // Add this line below to WebApiConfig.cs
+            config.Formatters.Add(new SirenMediaFormatter());
+
+            config.MapHttpAttributeRoutes();
+
+            config.Routes.MapHttpRoute(
+                "DefaultApi",
+                "api/{controller}/{id}",
+                new { id = RouteParameter.Optional }
+            );
+        }
+    }
+}
+```
+
+Once all these steps have been done, any incoming HTTP request with the ACCEPT header `application/vnd.siren+json` will be served a Siren entity.

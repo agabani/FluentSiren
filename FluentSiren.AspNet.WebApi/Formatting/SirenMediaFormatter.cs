@@ -29,11 +29,7 @@ namespace FluentSiren.AspNet.WebApi.Formatting
 
         public override Task WriteToStreamAsync(Type type, object value, Stream writeStream, HttpContent content, TransportContext transportContext)
         {
-            var serializeObject = SerializeObject(value);
-
-            var bytes = Encoding.UTF8.GetBytes(serializeObject);
-
-            return writeStream.WriteAsync(bytes, 0, bytes.Length);
+            return WriteToStreamAsync(type, value, writeStream, content, transportContext, CancellationToken.None);
         }
 
         public override Task WriteToStreamAsync(Type type, object value, Stream writeStream, HttpContent content, TransportContext transportContext, CancellationToken cancellationToken)

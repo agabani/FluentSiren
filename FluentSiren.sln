@@ -11,6 +11,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FluentSiren.AspNet.WebApi",
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FluentSiren.AspNet.WebApi.Tests.Integration", "FluentSiren.AspNet.WebApi.Tests.Integration\FluentSiren.AspNet.WebApi.Tests.Integration.csproj", "{BC2CA06E-1CBB-4087-A167-2399CEA70C36}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FluentSiren.AspNet.WebApi.Tests.Unit", "FluentSiren.AspNet.WebApi.Tests.Unit\FluentSiren.AspNet.WebApi.Tests.Unit.csproj", "{879A5C45-F690-4904-9902-A07E4A683CFE}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -33,6 +35,10 @@ Global
 		{BC2CA06E-1CBB-4087-A167-2399CEA70C36}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{BC2CA06E-1CBB-4087-A167-2399CEA70C36}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{BC2CA06E-1CBB-4087-A167-2399CEA70C36}.Release|Any CPU.Build.0 = Release|Any CPU
+		{879A5C45-F690-4904-9902-A07E4A683CFE}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{879A5C45-F690-4904-9902-A07E4A683CFE}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{879A5C45-F690-4904-9902-A07E4A683CFE}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{879A5C45-F690-4904-9902-A07E4A683CFE}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

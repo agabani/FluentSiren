@@ -10,7 +10,7 @@ __Current specification version: 0.6.1__
 |Package                  |Version                                                                                                                             |
 |-------------------------|------------------------------------------------------------------------------------------------------------------------------------|
 |FluentSiren              |[![NuGet downloads](https://img.shields.io/badge/nuget-v0.6.1.0-blue.svg)](https://www.nuget.org/packages/FluentSiren)              |
-|FluentSiren.AspNet.WebApi|[![NuGet downloads](https://img.shields.io/badge/nuget-v0.6.1.0-blue.svg)](https://www.nuget.org/packages/FluentSiren.AspNet.WebApi)|
+|FluentSiren.AspNet.WebApi|[![NuGet downloads](https://img.shields.io/badge/nuget-v0.6.1.1-blue.svg)](https://www.nuget.org/packages/FluentSiren.AspNet.WebApi)|
 
 ## Example
 Below is a C# example that builds the JSON Siren example found on the [Offical Siren Specification](https://github.com/kevinswiber/siren).

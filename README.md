@@ -190,7 +190,7 @@ namespace Demo.Api
 }
 ```
 
-Once all these steps have been done, any incoming HTTP request with the ACCEPT header `application/vnd.siren+json` will be served a Siren entity.
+Once all these steps have been completed, any incoming HTTP request with the ACCEPT header `application/vnd.siren+json` will be served a Siren entity.
 
 ```csharp
 using System.Web.Http;

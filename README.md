@@ -191,3 +191,32 @@ namespace Demo.Api
 ```
 
 Once all these steps have been done, any incoming HTTP request with the ACCEPT header `application/vnd.siren+json` will be served a Siren entity.
+
+```csharp
+using System.Web.Http;
+using FluentSiren.Builders;
+
+namespace Demo.Api.Controllers
+{
+    public class OrderController : ApiController
+    {
+        // GET: api/Order
+        public IHttpActionResult Get()
+        {
+            return Ok(new EntityBuilder()
+                .WithClass("order")
+                .WithProperty("orderNumber", 42)
+                .WithProperty("itemCount", 3)
+                .WithSubEntity(new EmbeddedLinkBuilder()
+                    .WithClass("items")
+                    .WithClass("collection")
+                    .WithRel("http://x.io/rels/order-items")
+                    .WithHref("http://api.x.io/orders/42/items"))
+                .WithLink(new LinkBuilder()
+                    .WithRel("self")
+                    .WithHref("http://api.x.io/orders/42"))
+                .Build());
+        }
+    }
+}
+```

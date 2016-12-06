@@ -15,16 +15,34 @@ namespace FluentSiren.AspNet.WebApi.Formatting
 {
     public class SirenMediaFormatter : MediaTypeFormatter
     {
+        private static readonly JsonSerializerSettings DefaultJsonSerializerSettings = new JsonSerializerSettings
+        {
+            ContractResolver = new CamelCasePropertyNamesContractResolver(),
+            NullValueHandling = NullValueHandling.Ignore
+        };
+
+        private static readonly Encoding DefaultEncoding = Encoding.UTF8;
+
+        private readonly Encoding _encoding;
         private readonly JsonSerializerSettings _jsonSerializerSettings;
 
-        public SirenMediaFormatter() : this(new JsonSerializerSettings {ContractResolver = new CamelCasePropertyNamesContractResolver(), NullValueHandling = NullValueHandling.Ignore})
+        public SirenMediaFormatter() : this(DefaultJsonSerializerSettings, DefaultEncoding)
         {
         }
 
-        public SirenMediaFormatter(JsonSerializerSettings settings)
+        public SirenMediaFormatter(JsonSerializerSettings settings) : this(settings, DefaultEncoding)
+        {
+        }
+
+        public SirenMediaFormatter(Encoding encoding) : this(DefaultJsonSerializerSettings, encoding)
+        {
+        }
+
+        public SirenMediaFormatter(JsonSerializerSettings settings, Encoding encoding)
         {
             SupportedMediaTypes.Add(new MediaTypeHeaderValue("application/vnd.siren+json"));
             _jsonSerializerSettings = settings;
+            _encoding = encoding;
         }
 
         public override Task WriteToStreamAsync(Type type, object value, Stream writeStream, HttpContent content, TransportContext transportContext)
@@ -36,7 +54,7 @@ namespace FluentSiren.AspNet.WebApi.Formatting
         {
             var serializeObject = SerializeObject(value);
 
-            var bytes = Encoding.UTF8.GetBytes(serializeObject);
+            var bytes = _encoding.GetBytes(serializeObject);
 
             return writeStream.WriteAsync(bytes, 0, bytes.Length, cancellationToken);
         }

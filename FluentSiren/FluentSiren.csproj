@@ -7,10 +7,11 @@
     <Company>agabani</Company>
     <PackageProjectUrl>https://github.com/agabani/FluentSiren</PackageProjectUrl>
     <PackageLicenseUrl>https://github.com/agabani/FluentSiren/blob/master/LICENSE</PackageLicenseUrl>
-    <Copyright>A fluent API to build specification enforced siren entities.</Copyright>
+    <Copyright>Copyright 2017</Copyright>
     <PackageTags>Siren Hypermedia HATEOAS Fluent Specification Enforced</PackageTags>
     <GeneratePackageOnBuild>True</GeneratePackageOnBuild>
     <PackageId>FluentSiren</PackageId>
+    <Description>A fluent API to build specification enforced siren entities.</Description>
   </PropertyGroup>
 
 </Project>

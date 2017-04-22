@@ -5,6 +5,12 @@
     <GeneratePackageOnBuild>True</GeneratePackageOnBuild>
     <Version>0.6.1.2</Version>
     <PackageId>FluentSiren.AspNetCore.Mvc</PackageId>
+    <Authors>agabani</Authors>
+    <Company>agabani</Company>
+    <PackageLicenseUrl>https://github.com/agabani/FluentSiren/blob/master/LICENSE</PackageLicenseUrl>
+    <PackageProjectUrl>https://github.com/agabani/FluentSiren</PackageProjectUrl>
+    <Description>A fluent API to build specification enforced siren entities. (ASP.NET Core 1.0+ WebApi integration)</Description>
+    <Copyright>Copyright 2017</Copyright>
   </PropertyGroup>
 
   <ItemGroup>

@@ -272,8 +272,8 @@ namespace Demo.Api.Controllers
     public class OrderController : Controller
     {
         // GET: api/order
-	[HttpGet]
-        public IHttpActionResult Get()
+        [HttpGet]
+        public IActionResult Get()
         {
             return Ok(new EntityBuilder()
                 .WithClass("order")

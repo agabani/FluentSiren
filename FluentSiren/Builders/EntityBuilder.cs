@@ -10,7 +10,7 @@ namespace FluentSiren.Builders
         private List<ActionBuilder> _actionBuilders;
         private List<string> _class;
         private List<LinkBuilder> _linkBuilders;
-        private Dictionary<string, dynamic> _properties;
+        private Dictionary<string, object> _properties;
         private List<SubEntityBuilder> _subEntityBuilders;
         private string _title;
 
@@ -23,10 +23,10 @@ namespace FluentSiren.Builders
             return this;
         }
 
-        public EntityBuilder WithProperty(string key, dynamic value)
+        public EntityBuilder WithProperty(string key, object value)
         {
             if (_properties == null)
-                _properties = new Dictionary<string, dynamic>();
+                _properties = new Dictionary<string, object>();
 
             _properties[key] = value;
             return this;

@@ -51,7 +51,7 @@
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\FluentSiren\FluentSiren.csproj">
-      <Project>{57afb757-b9cf-4630-a21b-5f9986ecbe8b}</Project>
+      <Project>{931cc4e6-6bf9-4c08-8af8-f6242bd23a17}</Project>
       <Name>FluentSiren</Name>
     </ProjectReference>
   </ItemGroup>

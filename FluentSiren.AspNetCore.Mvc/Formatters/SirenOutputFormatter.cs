@@ -32,7 +32,9 @@ namespace FluentSiren.AspNetCore.Mvc.Formatters
         public override Task WriteResponseBodyAsync(OutputFormatterWriteContext context, Encoding selectedEncoding)
         {
             return context.HttpContext.Response.WriteAsync(
-                JsonConvert.SerializeObject(context.Object, JsonSerializerSettings), selectedEncoding);
+                JsonConvert.SerializeObject(context.Object, JsonSerializerSettings),
+                selectedEncoding,
+                context.HttpContext.RequestAborted);
         }
     }
 }

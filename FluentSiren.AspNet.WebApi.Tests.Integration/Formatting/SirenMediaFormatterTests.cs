@@ -116,7 +116,7 @@ namespace FluentSiren.AspNet.WebApi.Tests.Integration.Formatting
             var jsonSerializerSettings = new JsonSerializerSettings
             {
                 ContractResolver = new CamelCasePropertyNamesContractResolver(),
-                NullValueHandling = NullValueHandling.Ignore
+                NullValueHandling = NullValueHandling.Include
             };
 
             _configuration.Formatters.Add(new SirenMediaFormatter(jsonSerializerSettings, Encoding.BigEndianUnicode));

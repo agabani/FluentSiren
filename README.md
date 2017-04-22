@@ -160,9 +160,9 @@ Console.WriteLine(json);
 }
 ```
 
-## WebApi
+## WebApi (ASP.NET Framework 4.5+)
 
-To use FluentSiren in a WebApi project, install FluentSiren.AspNet.WebApi package through "NuGet Package Manager" or "Package Manager Console" by typing the following command `install-package FluentSiren.AspNet.WebApi`
+To use FluentSiren in a WebApi (ASP.NET Framework 4.5+) project, install FluentSiren.AspNet.WebApi package through "NuGet Package Manager" or "Package Manager Console" by typing the following command `install-package FluentSiren.AspNet.WebApi`
 
 Once the package(s) are installed, add `config.Formatters.Add(new SirenMediaFormatter());` to your `WebApiConfig.cs` as shown in the example below.
 
@@ -202,6 +202,77 @@ namespace Demo.Api.Controllers
     public class OrderController : ApiController
     {
         // GET: api/Order
+        public IHttpActionResult Get()
+        {
+            return Ok(new EntityBuilder()
+                .WithClass("order")
+                .WithProperty("orderNumber", 42)
+                .WithProperty("itemCount", 3)
+                .WithSubEntity(new EmbeddedLinkBuilder()
+                    .WithClass("items")
+                    .WithClass("collection")
+                    .WithRel("http://x.io/rels/order-items")
+                    .WithHref("http://api.x.io/orders/42/items"))
+                .WithLink(new LinkBuilder()
+                    .WithRel("self")
+                    .WithHref("http://api.x.io/orders/42"))
+                .Build());
+        }
+    }
+}
+```
+
+## WebApi (ASP.NET Core 1.0+)
+
+To use FluentSiren in a WebApi (ASP.NET Core 1.0+) project, install FluentSiren.AspNetCore.Mvc package through "NuGet Package Manager" or "Package Manager Console" by typing the following command `install-package FluentSiren.AspNetCore.Mvc`
+
+Once the package(s) are installed, add `services.AddMvc(options => { options.OutputFormatters.Add(new SirenOutputFormatter()); });` to your `StartUp.cs` as shown in the example below.
+
+```csharp
+using FluentSiren.AspNetCore.Mvc.Formatters;
+using Microsoft.AspNetCore.Builder;
+using Microsoft.AspNetCore.Hosting;
+using Microsoft.Extensions.Configuration;
+using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.Logging;
+
+namespace Demo.Api
+{
+    public class Startup
+    {
+        public Startup(IHostingEnvironment env)
+        {
+            var builder = new ConfigurationBuilder()
+                .SetBasePath(env.ContentRootPath)
+                .AddJsonFile("appsettings.json", false, true)
+                .AddJsonFile($"appsettings.{env.EnvironmentName}.json", true)
+                .AddEnvironmentVariables();
+            Configuration = builder.Build();
+        }
+	
+        public IConfigurationRoot Configuration { get; }
+
+        public void ConfigureServices(IServiceCollection services)
+        {
+            services.AddMvc(options => { options.OutputFormatters.Add(new SirenOutputFormatter()); });
+        }
+    }
+}
+```
+
+Once all these steps have been completed, any incoming HTTP request with the ACCEPT header `application/vnd.siren+json` will be served a Siren entity.
+
+```csharp
+using System.Collections.Generic;
+using FluentSiren.Builders;
+using Microsoft.AspNetCore.Mvc;
+
+namespace Demo.Api.Controllers
+{
+    public class OrderController : Controller
+    {
+        // GET: api/order
+	[HttpGet]
         public IHttpActionResult Get()
         {
             return Ok(new EntityBuilder()

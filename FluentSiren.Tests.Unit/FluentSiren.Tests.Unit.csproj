@@ -53,16 +53,16 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\FluentSiren\FluentSiren.csproj">
-      <Project>{57afb757-b9cf-4630-a21b-5f9986ecbe8b}</Project>
-      <Name>FluentSiren</Name>
-    </ProjectReference>
-  </ItemGroup>
-  <ItemGroup>
     <Service Include="{82A7F48D-3B50-4B1E-B82E-3ADA8210C358}" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\FluentSiren\FluentSiren.csproj">
+      <Project>{931cc4e6-6bf9-4c08-8af8-f6242bd23a17}</Project>
+      <Name>FluentSiren</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

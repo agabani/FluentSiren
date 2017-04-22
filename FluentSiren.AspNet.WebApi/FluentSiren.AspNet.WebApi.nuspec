@@ -2,15 +2,18 @@
 <package >
   <metadata>
     <id>$id$</id>
-    <version>0.6.1.1</version>
+    <version>0.6.1.2</version>
     <title>$title$</title>
     <authors>agabani</authors>
     <owners>agabani</owners>
     <projectUrl>https://github.com/agabani/FluentSiren</projectUrl>
     <requireLicenseAcceptance>false</requireLicenseAcceptance>
-    <description>A fluent API to build specification enforced siren entities. (ASP.NET WebApi integration)</description>
+    <description>A fluent API to build specification enforced siren entities. (ASP.NET Framework 4.5+ WebApi integration)</description>
     <releaseNotes>specification 0.6.1</releaseNotes>
-    <copyright>Copyright 2016</copyright>
+    <copyright>Copyright 2017</copyright>
     <tags>Siren Hypermedia HATEOAS Fluent Specification Enforced ASP.NET WebApi</tags>
+    <dependencies>
+      <dependency id="FluentSiren" version="0.6.1.2" />
+    </dependencies>
   </metadata>
 </package>

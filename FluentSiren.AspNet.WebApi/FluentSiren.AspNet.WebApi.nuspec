@@ -2,7 +2,7 @@
 <package >
   <metadata>
     <id>$id$</id>
-    <version>0.6.1.1</version>
+    <version>0.6.1.2</version>
     <title>$title$</title>
     <authors>agabani</authors>
     <owners>agabani</owners>
@@ -12,5 +12,8 @@
     <releaseNotes>specification 0.6.1</releaseNotes>
     <copyright>Copyright 2016</copyright>
     <tags>Siren Hypermedia HATEOAS Fluent Specification Enforced ASP.NET WebApi</tags>
+    <dependencies>
+      <dependency id="FluentSiren" version="0.6.1.2" />
+    </dependencies>
   </metadata>
 </package>

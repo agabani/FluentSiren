@@ -10,6 +10,7 @@
     <Copyright>A fluent API to build specification enforced siren entities.</Copyright>
     <PackageTags>Siren Hypermedia HATEOAS Fluent Specification Enforced</PackageTags>
     <GeneratePackageOnBuild>True</GeneratePackageOnBuild>
+    <PackageId>FluentSiren</PackageId>
   </PropertyGroup>
 
 </Project>

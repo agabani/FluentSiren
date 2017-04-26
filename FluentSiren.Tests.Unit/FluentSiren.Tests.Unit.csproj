@@ -50,8 +50,11 @@
     <Compile Include="Builders\EntityBuilderTests.cs" />
     <Compile Include="Builders\FieldBuilderTests.cs" />
     <Compile Include="Builders\LinkBuilderTests.cs" />
-    <Compile Include="Example.cs" />
+    <Compile Include="Examples\TemplatelessExample.cs" />
+    <Compile Include="Examples\Example.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Templates\EntityTemplateTests.cs" />
+    <Compile Include="Examples\TemplateExample.cs" />
   </ItemGroup>
   <ItemGroup>
     <Service Include="{82A7F48D-3B50-4B1E-B82E-3ADA8210C358}" />

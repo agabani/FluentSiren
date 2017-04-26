@@ -5,65 +5,71 @@ using Action = FluentSiren.Models.Action;
 
 namespace FluentSiren.Builders
 {
-    public class ActionBuilder
+    public class ActionBuilder : ActionBuilder<ActionBuilder, Action>
     {
-        private List<string> _class;
-        private List<FieldBuilder> _fieldBuilders;
-        private string _href;
-        private string _method;
+    }
+
+    public class ActionBuilder<TBuilder, TEntity> : Builder<TBuilder, TEntity>
+        where TBuilder : ActionBuilder<TBuilder, TEntity>
+        where TEntity : Action
+    {
         private string _name;
+        private List<string> _class;
+        private string _method;
+        private string _href;
         private string _title;
         private string _type;
+        private List<FieldBuilder> _fieldBuilders;
 
-        public ActionBuilder WithName(string name)
+        public TBuilder WithName(string name)
         {
             _name = name;
-            return this;
+            return This;
         }
 
-        public ActionBuilder WithClass(string @class)
+        public TBuilder WithClass(string @class)
         {
             if (_class == null)
                 _class = new List<string>();
 
             _class.Add(@class);
-            return this;
+            return This;
         }
 
-        public ActionBuilder WithMethod(string method)
+        public TBuilder WithMethod(string method)
         {
             _method = method;
-            return this;
+            return This;
         }
 
-        public ActionBuilder WithHref(string href)
+        public TBuilder WithHref(string href)
         {
             _href = href;
-            return this;
+            return This;
         }
 
-        public ActionBuilder WithTitle(string title)
+        public TBuilder WithTitle(string title)
         {
             _title = title;
-            return this;
+            return This;
         }
 
-        public ActionBuilder WithType(string type)
+        public TBuilder WithType(string type)
         {
             _type = type;
-            return this;
+            return This;
         }
 
-        public ActionBuilder WithField(FieldBuilder fieldBuilder)
+        public TBuilder WithField(FieldBuilder fieldBuilder)
         {
             if (_fieldBuilders == null)
                 _fieldBuilders = new List<FieldBuilder>();
 
             _fieldBuilders.Add(fieldBuilder);
-            return this;
+            return This;
         }
 
-        public Action Build()
+        public override TEntity Build()
         {
             if (string.IsNullOrEmpty(_name))
                 throw new ArgumentException("Name is required.");
@@ -85,7 +91,7 @@ namespace FluentSiren.Builders
             if (action.Fields != null && new HashSet<string>(action.Fields.Select(x => x.Name)).Count != action.Fields.Count)
                 throw new ArgumentException("Field names MUST be unique within the set of fields for an action.");
 
-            return action;
+            return (TEntity) action;
         }
     }
 }

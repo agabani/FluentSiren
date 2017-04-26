@@ -11,7 +11,7 @@ namespace FluentSiren.Models
         public string Name { get; internal set; }
         public IReadOnlyList<string> Class { get; internal set; }
         public string Type { get; internal set; }
-        public string Value { get; internal set; }
+        public object Value { get; internal set; }
         public string Title { get; internal set; }
     }
 }

@@ -10,7 +10,7 @@ namespace FluentSiren.Builders
         private string _name;
         private string _title;
         private string _type;
-        private string _value;
+        private object _value;
 
         public FieldBuilder WithName(string name)
         {
@@ -33,7 +33,7 @@ namespace FluentSiren.Builders
             return this;
         }
 
-        public FieldBuilder WithValue(string value)
+        public FieldBuilder WithValue(object value)
         {
             _value = value;
             return this;
@@ -49,6 +49,9 @@ namespace FluentSiren.Builders
         {
             if (string.IsNullOrEmpty(_name))
                 throw new ArgumentException("Name is required.");
+
+            if (_value != null && (!(_value is ValueType || _value is string) || _value is bool))
+                throw new ArgumentException("Value must be a string or a number.");
 
             return new Field
             {

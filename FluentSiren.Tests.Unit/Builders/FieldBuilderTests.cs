@@ -16,6 +16,13 @@ namespace FluentSiren.Tests.Unit.Builders
 
         private FieldBuilder _builder;
 
+        private enum Enum
+        {
+            One,
+            Two,
+            Three
+        }
+
         [Test]
         public void it_can_build()
         {
@@ -29,7 +36,7 @@ namespace FluentSiren.Tests.Unit.Builders
                 .Build();
 
             Assert.That(field.Name, Is.EqualTo("name"));
-            Assert.That(field.Class.Select(x => x), Is.EqualTo(new [] {"class 1", "class 2"}));
+            Assert.That(field.Class.Select(x => x), Is.EqualTo(new[] {"class 1", "class 2"}));
             Assert.That(field.Type, Is.EqualTo("type"));
             Assert.That(field.Value, Is.EqualTo("value"));
             Assert.That(field.Title, Is.EqualTo("title"));
@@ -74,9 +81,45 @@ namespace FluentSiren.Tests.Unit.Builders
         }
 
         [Test]
+        public void value_can_be_a_number_decimal()
+        {
+            Assert.That(_builder.WithName("name").WithValue((decimal) 1).Build().Value, Is.EqualTo(1));
+        }
+
+        [Test]
+        [TestCase("string")]
+        [TestCase((byte) 1)]
+        [TestCase('a')]
+        [TestCase(Enum.Two)]
+        [TestCase((float) 1)]
+        [TestCase((int) 1.0)]
+        [TestCase((long) 1)]
+        [TestCase((sbyte) 1)]
+        [TestCase((short) 1)]
+        [TestCase((uint) 1)]
+        [TestCase((ulong) 1)]
+        [TestCase((ushort) 1)]
+        public void value_can_be_a_number_or_a_string(object value)
+        {
+            Assert.That(_builder.WithName("name").WithValue(value).Build().Value, Is.EqualTo(value));
+        }
+
+        [Test]
         public void title_is_optional()
         {
             Assert.That(_builder.WithName("name").Build().Title, Is.Null);
+        }
+
+        [Test]
+        public void value_can_not_be_a_bool()
+        {
+            Assert.That(Assert.Throws<ArgumentException>(() => _builder.WithName("name").WithValue(true).Build()).Message, Is.EqualTo("Value must be a string or a number."));
+        }
+
+        [Test]
+        public void value_can_not_be_an_object()
+        {
+            Assert.That(Assert.Throws<ArgumentException>(() => _builder.WithName("name").WithValue(new object()).Build()).Message, Is.EqualTo("Value must be a string or a number."));
         }
     }
 }

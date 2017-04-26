@@ -5,96 +5,45 @@ using FluentSiren.Models;
 
 namespace FluentSiren.Builders
 {
-    public class EmbeddedRepresentationBuilder : SubEntityBuilder
+    public class EmbeddedRepresentationBuilder : EmbeddedRepresentationBuilder<EmbeddedRepresentationBuilder, Entity>, ISubEntityBuilder
     {
-        private List<ActionBuilder> _actionBuilders;
-        private List<string> _class;
+    }
+
+    public class EmbeddedRepresentationBuilder<TBuilder, TEntity> : EntityBuilder<TBuilder, TEntity>
+        where TBuilder : EmbeddedRepresentationBuilder<TBuilder, TEntity>
+        where TEntity : Entity
+    {
         private List<string> _rel;
-        private List<LinkBuilder> _linkBuilders;
-        private Dictionary<string, object> _properties;
-        private List<SubEntityBuilder> _subEntityBuilders;
-        private string _title;
 
-        public EmbeddedRepresentationBuilder WithClass(string @class)
-        {
-            if (_class == null)
-                _class = new List<string>();
-
-            _class.Add(@class);
-            return this;
-        }
-
-        public EmbeddedRepresentationBuilder WithRel(string rel)
+        public TBuilder WithRel(string rel)
         {
             if (_rel == null)
                 _rel = new List<string>();
 
             _rel.Add(rel);
-            return this;
+            return This;
         }
 
-        public EmbeddedRepresentationBuilder WithProperty(string key, object value)
-        {
-            if (_properties == null)
-                _properties = new Dictionary<string, object>();
-
-            _properties[key] = value;
-            return this;
-        }
-
-        public EmbeddedRepresentationBuilder WithSubEntity(SubEntityBuilder subEntityBuilder)
-        {
-            if (_subEntityBuilders == null)
-                _subEntityBuilders = new List<SubEntityBuilder>();
-
-            _subEntityBuilders.Add(subEntityBuilder);
-            return this;
-        }
-
-        public EmbeddedRepresentationBuilder WithLink(LinkBuilder linkBuilder)
-        {
-            if (_linkBuilders == null)
-                _linkBuilders = new List<LinkBuilder>();
-
-            _linkBuilders.Add(linkBuilder);
-            return this;
-        }
-
-        public EmbeddedRepresentationBuilder WithAction(ActionBuilder actionBuilder)
-        {
-            if (_actionBuilders == null)
-                _actionBuilders = new List<ActionBuilder>();
-
-            _actionBuilders.Add(actionBuilder);
-            return this;
-        }
-
-        public EmbeddedRepresentationBuilder WithTitle(string title)
-        {
-            _title = title;
-            return this;
-        }
-
-        public override SubEntity Build()
+        public override TEntity Build()
         {
             if (_rel == null || !_rel.Any())
                 throw new ArgumentException("Rel is required.");
 
-            var subEntity = new SubEntity
+            var subEntity = new Entity
             {
-                Class = _class?.ToArray(),
+                Class = Class?.ToArray(),
                 Rel = _rel?.ToArray(),
-                Properties = _properties?.ToDictionary(kvp => kvp.Key, kvp => kvp.Value),
-                Entities = _subEntityBuilders?.Select(x => x.Build()).ToArray(),
-                Links = _linkBuilders?.Select(x => x.Build()).ToArray(),
-                Actions = _actionBuilders?.Select(x => x.Build()).ToArray(),
-                Title = _title
+                Properties = Properties?.ToDictionary(kvp => kvp.Key, kvp => kvp.Value),
+                Entities = SubEntityBuilders?.Select(x => x.Build()).ToArray(),
+                Links = LinkBuilders?.Select(x => x.Build()).ToArray(),
+                Actions = ActionBuilders?.Select(x => x.Build()).ToArray(),
+                Title = Title
             };
 
             if (subEntity.Actions != null && new HashSet<string>(subEntity.Actions.Select(x => x.Name)).Count != subEntity.Actions.Count)
                 throw new ArgumentException("Action names MUST be unique within the set of actions for an entity.");
 
-            return subEntity;
+            return (TEntity) subEntity;
         }
     }
 }

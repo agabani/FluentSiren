@@ -5,7 +5,13 @@ using FluentSiren.Models;
 
 namespace FluentSiren.Builders
 {
-    public class LinkBuilder
+    public class LinkBuilder : LinkBuilder<LinkBuilder, Link>
+    {
+    }
+
+    public class LinkBuilder<TBuilder, TEntity> : Builder<TBuilder, TEntity>
+        where TBuilder : LinkBuilder<TBuilder, TEntity>
+        where TEntity : Link
     {
         private readonly List<string> _rel = new List<string>();
         private List<string> _class;
@@ -13,40 +19,40 @@ namespace FluentSiren.Builders
         private string _title;
         private string _type;
 
-        public LinkBuilder WithRel(string rel)
+        public TBuilder WithRel(string rel)
         {
             _rel.Add(rel);
-            return this;
+            return This;
         }
 
-        public LinkBuilder WithClass(string @class)
+        public TBuilder WithClass(string @class)
         {
             if (_class == null)
                 _class = new List<string>();
 
             _class.Add(@class);
-            return this;
+            return This;
         }
 
-        public LinkBuilder WithHref(string href)
+        public TBuilder WithHref(string href)
         {
             _href = href;
-            return this;
+            return This;
         }
 
-        public LinkBuilder WithTitle(string title)
+        public TBuilder WithTitle(string title)
         {
             _title = title;
-            return this;
+            return This;
         }
 
-        public LinkBuilder WithType(string type)
+        public TBuilder WithType(string type)
         {
             _type = type;
-            return this;
+            return This;
         }
 
-        public Link Build()
+        public override TEntity Build()
         {
             if (!_rel.Any())
                 throw new ArgumentException("Rel is required.");
@@ -56,7 +62,7 @@ namespace FluentSiren.Builders
                 throw new ArgumentException("Href is required.");
             }
 
-            return new Link
+            return (TEntity) new Link
             {
                 Rel = _rel.ToArray(),
                 Class = _class?.ToArray(),

@@ -33,12 +33,14 @@ namespace FluentSiren.Builders
             return This;
         }
 
+        // TODO: "hidden", "text", "search", "tel", "url", "email", "password", "datetime", "date", "month", "week", "time", "datetime-local", "number", "range", "color", "checkbox", "radio", "file"
         public TBuilder WithType(string type)
         {
             _type = type;
             return This;
         }
 
+        // TODO: "string", "number", "FieldValueObject"
         public TBuilder WithValue(object value)
         {
             _value = value;

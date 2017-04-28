@@ -50,6 +50,7 @@
     <Compile Include="Builders\EmbeddedRepresentationBuilderTests.cs" />
     <Compile Include="Builders\EntityBuilderTests.cs" />
     <Compile Include="Builders\FieldBuilderTests.cs" />
+    <Compile Include="Builders\FieldValueBuilderTests.cs" />
     <Compile Include="Builders\LinkBuilderTests.cs" />
     <Compile Include="Examples\EntityTemplate\ExtensionExample.cs" />
     <Compile Include="Examples\EntityTemplate\PrivateExample.cs" />

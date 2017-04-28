@@ -36,12 +36,14 @@ namespace FluentSiren.Builders
             return This;
         }
 
+        // TODO: "DELETE", "GET", "PATCH", "POST", "PUT"
         public TBuilder WithMethod(string method)
         {
             _method = method;
             return This;
         }
 
+        // TODO: public TBuilder WithHref(Uri href)
         public TBuilder WithHref(string href)
         {
             _href = href;

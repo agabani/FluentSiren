@@ -5,7 +5,13 @@ using FluentSiren.Models;
 
 namespace FluentSiren.Builders
 {
-    public class EmbeddedLinkBuilder : SubEntityBuilder
+    public class EmbeddedLinkBuilder : EmbeddedLinkBuilder<EmbeddedLinkBuilder, Entity>, ISubEntityBuilder
+    {
+    }
+
+    public class EmbeddedLinkBuilder<TBuilder, TEntity> : Builder<TBuilder, TEntity>
+        where TBuilder : EmbeddedLinkBuilder<TBuilder, TEntity>
+        where TEntity : Entity
     {
         private List<string> _class;
         private List<string> _rel;
@@ -13,41 +19,43 @@ namespace FluentSiren.Builders
         private string _type;
         private string _title;
 
-        public EmbeddedLinkBuilder WithClass(string @class)
+        public TBuilder WithClass(string @class)
         {
             if (_class == null)
                 _class = new List<string>();
 
             _class.Add(@class);
-            return this;
+            return This;
         }
-        public EmbeddedLinkBuilder WithRel(string rel)
+
+        public TBuilder WithRel(string rel)
         {
             if (_rel == null)
                 _rel = new List<string>();
 
             _rel.Add(rel);
-            return this;
+            return This;
         }
-        public EmbeddedLinkBuilder WithHref(string href)
+
+        public TBuilder WithHref(string href)
         {
             _href = href;
-            return this;
+            return This;
         }
 
-        public EmbeddedLinkBuilder WithType(string type)
+        public TBuilder WithType(string type)
         {
             _type = type;
-            return this;
+            return This;
         }
 
-        public EmbeddedLinkBuilder WithTitle(string title)
+        public TBuilder WithTitle(string title)
         {
             _title = title;
-            return this;
+            return This;
         }
 
-        public override SubEntity Build()
+        public override TEntity Build()
         {
             if (_rel == null || !_rel.Any())
                 throw new ArgumentException("Rel is required.");
@@ -55,7 +63,7 @@ namespace FluentSiren.Builders
             if (string.IsNullOrEmpty(_href))
                 throw new ArgumentException("Href is required.");
 
-            return new SubEntity
+            return (TEntity) new Entity
             {
                 Class = _class?.ToArray(),
                 Rel = _rel?.ToArray(),

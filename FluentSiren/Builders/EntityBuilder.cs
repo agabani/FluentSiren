@@ -5,82 +5,88 @@ using FluentSiren.Models;
 
 namespace FluentSiren.Builders
 {
-    public class EntityBuilder
+    public class EntityBuilder : EntityBuilder<EntityBuilder, Entity>
     {
-        private List<ActionBuilder> _actionBuilders;
-        private List<string> _class;
-        private List<LinkBuilder> _linkBuilders;
-        private Dictionary<string, object> _properties;
-        private List<SubEntityBuilder> _subEntityBuilders;
-        private string _title;
+    }
 
-        public EntityBuilder WithClass(string @class)
+    public class EntityBuilder<TBuilder, TEntity> : Builder<TBuilder, TEntity>
+        where TBuilder : EntityBuilder<TBuilder, TEntity>
+        where TEntity : Entity
+    {
+        protected List<string> Class;
+        protected Dictionary<string, object> Properties;
+        protected List<ISubEntityBuilder> SubEntityBuilders;
+        protected List<LinkBuilder> LinkBuilders;
+        protected List<ActionBuilder> ActionBuilders;
+        protected string Title;
+
+        public TBuilder WithClass(string @class)
         {
-            if (_class == null)
-                _class = new List<string>();
+            if (Class == null)
+                Class = new List<string>();
 
-            _class.Add(@class);
-            return this;
+            Class.Add(@class);
+            return This;
         }
 
-        public EntityBuilder WithProperty(string key, object value)
+        public TBuilder WithProperty(string key, object value)
         {
-            if (_properties == null)
-                _properties = new Dictionary<string, object>();
+            if (Properties == null)
+                Properties = new Dictionary<string, object>();
 
-            _properties[key] = value;
-            return this;
+            Properties[key] = value;
+            return This;
         }
 
-        public EntityBuilder WithSubEntity(SubEntityBuilder subEntityBuilder)
+        public TBuilder WithSubEntity(ISubEntityBuilder subEntityBuilder)
         {
-            if (_subEntityBuilders == null)
-                _subEntityBuilders = new List<SubEntityBuilder>();
+            if (SubEntityBuilders == null)
+                SubEntityBuilders = new List<ISubEntityBuilder>();
 
-            _subEntityBuilders.Add(subEntityBuilder);
-            return this;
+            SubEntityBuilders.Add(subEntityBuilder);
+            return This;
         }
 
-        public EntityBuilder WithLink(LinkBuilder linkBuilder)
+        public TBuilder WithLink(LinkBuilder linkBuilder)
         {
-            if (_linkBuilders == null)
-                _linkBuilders = new List<LinkBuilder>();
+            if (LinkBuilders == null)
+                LinkBuilders = new List<LinkBuilder>();
 
-            _linkBuilders.Add(linkBuilder);
-            return this;
+            LinkBuilders.Add(linkBuilder);
+            return This;
         }
 
-        public EntityBuilder WithAction(ActionBuilder actionBuilder)
+        public TBuilder WithAction(ActionBuilder actionBuilder)
         {
-            if (_actionBuilders == null)
-                _actionBuilders = new List<ActionBuilder>();
+            if (ActionBuilders == null)
+                ActionBuilders = new List<ActionBuilder>();
 
-            _actionBuilders.Add(actionBuilder);
-            return this;
+            ActionBuilders.Add(actionBuilder);
+            return This;
         }
 
-        public EntityBuilder WithTitle(string title)
+        public TBuilder WithTitle(string title)
         {
-            _title = title;
-            return this;
+            Title = title;
+            return This;
         }
 
-        public Entity Build()
+        public override TEntity Build()
         {
             var entity = new Entity
             {
-                Class = _class?.ToArray(),
-                Properties = _properties?.ToDictionary(kvp => kvp.Key, kvp => kvp.Value),
-                Entities = _subEntityBuilders?.Select(x => x.Build()).ToArray(),
-                Links = _linkBuilders?.Select(x => x.Build()).ToArray(),
-                Actions = _actionBuilders?.Select(x => x.Build()).ToArray(),
-                Title = _title
+                Class = Class?.ToArray(),
+                Properties = Properties?.ToDictionary(kvp => kvp.Key, kvp => kvp.Value),
+                Entities = SubEntityBuilders?.Select(x => x.Build()).ToArray(),
+                Links = LinkBuilders?.Select(x => x.Build()).ToArray(),
+                Actions = ActionBuilders?.Select(x => x.Build()).ToArray(),
+                Title = Title
             };
 
             if (entity.Actions != null && new HashSet<string>(entity.Actions.Select(x => x.Name)).Count != entity.Actions.Count)
                 throw new ArgumentException("Action names MUST be unique within the set of actions for an entity.");
 
-            return entity;
+            return (TEntity) entity;
         }
     }
 }

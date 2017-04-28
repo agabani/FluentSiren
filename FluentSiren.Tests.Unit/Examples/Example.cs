@@ -4,7 +4,7 @@ using Newtonsoft.Json;
 using Newtonsoft.Json.Serialization;
 using NUnit.Framework;
 
-namespace FluentSiren.Tests.Unit
+namespace FluentSiren.Tests.Unit.Examples
 {
     [TestFixture]
     public class Example

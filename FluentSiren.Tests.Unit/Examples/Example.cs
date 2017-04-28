@@ -1,5 +1,6 @@
 ﻿using System;
 using FluentSiren.Builders;
+using FluentSiren.Tests.Unit.Schema;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Serialization;
 using NUnit.Framework;
@@ -63,6 +64,8 @@ namespace FluentSiren.Tests.Unit.Examples
                 ContractResolver = new CamelCasePropertyNamesContractResolver(),
                 NullValueHandling = NullValueHandling.Ignore
             });
+
+            SirenSchema.Validate(json);
 
             Console.WriteLine(json);
         }

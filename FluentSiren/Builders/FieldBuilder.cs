@@ -4,48 +4,54 @@ using FluentSiren.Models;
 
 namespace FluentSiren.Builders
 {
-    public class FieldBuilder
+    public class FieldBuilder : FieldBuilder<FieldBuilder, Field>
     {
-        private List<string> _class;
+    }
+
+    public class FieldBuilder<TBuilder, TEntity> : Builder<TBuilder, TEntity>
+        where TBuilder : FieldBuilder<TBuilder, TEntity>
+        where TEntity : Field
+    {
         private string _name;
-        private string _title;
+        private List<string> _class;
         private string _type;
         private object _value;
+        private string _title;
 
-        public FieldBuilder WithName(string name)
+        public TBuilder WithName(string name)
         {
             _name = name;
-            return this;
+            return This;
         }
 
-        public FieldBuilder WithClass(string @class)
+        public TBuilder WithClass(string @class)
         {
             if (_class == null)
                 _class = new List<string>();
 
             _class.Add(@class);
-            return this;
+            return This;
         }
 
-        public FieldBuilder WithType(string type)
+        public TBuilder WithType(string type)
         {
             _type = type;
-            return this;
+            return This;
         }
 
-        public FieldBuilder WithValue(object value)
+        public TBuilder WithValue(object value)
         {
             _value = value;
-            return this;
+            return This;
         }
 
-        public FieldBuilder WithTitle(string title)
+        public TBuilder WithTitle(string title)
         {
             _title = title;
-            return this;
+            return This;
         }
 
-        public Field Build()
+        public override TEntity Build()
         {
             if (string.IsNullOrEmpty(_name))
                 throw new ArgumentException("Name is required.");
@@ -53,7 +59,7 @@ namespace FluentSiren.Builders
             if (_value != null && (!(_value is ValueType || _value is string) || _value is bool))
                 throw new ArgumentException("Value must be a string or a number.");
 
-            return new Field
+            return (TEntity) new Field
             {
                 Name = _name,
                 Class = _class?.ToArray(),

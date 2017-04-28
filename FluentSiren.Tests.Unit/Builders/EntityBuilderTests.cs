@@ -22,6 +22,7 @@ namespace FluentSiren.Tests.Unit.Builders
             var entity = _builder
                 .WithClass("class 1")
                 .WithClass("class 2")
+                .WithTitle("title")
                 .WithProperty("key 1", "value 1")
                 .WithProperty("key 2", "value 2")
                 .WithSubEntity(new EmbeddedLinkBuilder().WithRel("rel 1").WithHref("href"))
@@ -32,7 +33,6 @@ namespace FluentSiren.Tests.Unit.Builders
                 .WithLink(new LinkBuilder().WithRel("rel 2").WithHref("href"))
                 .WithAction(new ActionBuilder().WithName("name 1").WithHref("href"))
                 .WithAction(new ActionBuilder().WithName("name 2").WithHref("href"))
-                .WithTitle("title")
                 .Build();
 
             Assert.That(entity.Class.Select(x => x), Is.EqualTo(new[] {"class 1", "class 2"}));

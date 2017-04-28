@@ -14,11 +14,11 @@ namespace FluentSiren.Builders
         where TEntity : Entity
     {
         protected List<string> Class;
+        protected string Title;
         protected Dictionary<string, object> Properties;
         protected List<ISubEntityBuilder> SubEntityBuilders;
         protected List<LinkBuilder> LinkBuilders;
         protected List<ActionBuilder> ActionBuilders;
-        protected string Title;
 
         public TBuilder WithClass(string @class)
         {
@@ -26,6 +26,12 @@ namespace FluentSiren.Builders
                 Class = new List<string>();
 
             Class.Add(@class);
+            return This;
+        }
+
+        public TBuilder WithTitle(string title)
+        {
+            Title = title;
             return This;
         }
 
@@ -65,22 +71,16 @@ namespace FluentSiren.Builders
             return This;
         }
 
-        public TBuilder WithTitle(string title)
-        {
-            Title = title;
-            return This;
-        }
-
         public override TEntity Build()
         {
             var entity = new Entity
             {
                 Class = Class?.ToArray(),
+                Title = Title,
                 Properties = Properties?.ToDictionary(kvp => kvp.Key, kvp => kvp.Value),
                 Entities = SubEntityBuilders?.Select(x => x.Build()).ToArray(),
                 Links = LinkBuilders?.Select(x => x.Build()).ToArray(),
-                Actions = ActionBuilders?.Select(x => x.Build()).ToArray(),
-                Title = Title
+                Actions = ActionBuilders?.Select(x => x.Build()).ToArray()
             };
 
             if (entity.Actions != null && new HashSet<string>(entity.Actions.Select(x => x.Name)).Count != entity.Actions.Count)

@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Linq;
 using FluentSiren.Builders;
+using FluentSiren.Enums;
 using NUnit.Framework;
 
 namespace FluentSiren.Tests.Unit.Builders
@@ -23,8 +24,8 @@ namespace FluentSiren.Tests.Unit.Builders
                 .WithName("name")
                 .WithClass("class 1")
                 .WithClass("class 2")
-                .WithMethod("method")
-                .WithHref("href")
+                .WithMethod(Method.Post)
+                .WithHref(new Uri("http://href"))
                 .WithTitle("title")
                 .WithType("type")
                 .WithField(new FieldBuilder().WithName("name 1"))
@@ -33,8 +34,8 @@ namespace FluentSiren.Tests.Unit.Builders
 
             Assert.That(action.Name, Is.EqualTo("name"));
             Assert.That(action.Class.Select(x => x), Is.EqualTo(new[] { "class 1", "class 2" }));
-            Assert.That(action.Method, Is.EqualTo("method"));
-            Assert.That(action.Href, Is.EqualTo("href"));
+            Assert.That(action.Method, Is.EqualTo("POST"));
+            Assert.That(action.Href, Is.EqualTo("http://href/"));
             Assert.That(action.Title, Is.EqualTo("title"));
             Assert.That(action.Type, Is.EqualTo("type"));
             Assert.That(action.Fields.Select(x => x.Name), Is.EqualTo(new[] { "name 1", "name 2" }));
@@ -45,7 +46,7 @@ namespace FluentSiren.Tests.Unit.Builders
         {
             _builder
                 .WithName("name")
-                .WithHref("href")
+                .WithHref(new Uri("http://href"))
                 .WithClass("class")
                 .WithField(new FieldBuilder().WithName("name"));
 
@@ -60,19 +61,19 @@ namespace FluentSiren.Tests.Unit.Builders
         [Test]
         public void name_is_required()
         {
-            Assert.That(Assert.Throws<ArgumentException>(() => _builder.WithHref("href").Build()).Message, Is.EqualTo("Name is required."));
+            Assert.That(Assert.Throws<ArgumentException>(() => _builder.WithHref(new Uri("http://href")).Build()).Message, Is.EqualTo("Name is required."));
         }
 
         [Test]
         public void class_is_optional()
         {
-            Assert.That(_builder.WithName("name").WithHref("href").Build().Class, Is.Null);
+            Assert.That(_builder.WithName("name").WithHref(new Uri("http://href")).Build().Class, Is.Null);
         }
 
         [Test]
         public void method_is_optional_and_defaults_to_get()
         {
-            Assert.That(_builder.WithName("name").WithHref("href").Build().Method, Is.EqualTo("GET"));
+            Assert.That(_builder.WithName("name").WithHref(new Uri("http://href")).Build().Method, Is.EqualTo("GET"));
         }
 
         [Test]
@@ -84,31 +85,31 @@ namespace FluentSiren.Tests.Unit.Builders
         [Test]
         public void title_is_optional()
         {
-            Assert.That(_builder.WithName("name").WithHref("href").Build().Title, Is.Null);
+            Assert.That(_builder.WithName("name").WithHref(new Uri("http://href")).Build().Title, Is.Null);
         }
 
         [Test]
         public void type_is_optional()
         {
-            Assert.That(_builder.WithName("name").WithHref("href").Build().Type, Is.Null);
+            Assert.That(_builder.WithName("name").WithHref(new Uri("http://href")).Build().Type, Is.Null);
         }
 
         [Test]
         public void type_is_optional_and_defaults_to_application_x_www_form_urlencoded_when_field_exists()
         {
-            Assert.That(_builder.WithName("name").WithHref("href").WithField(new FieldBuilder().WithName("name")).Build().Type, Is.EqualTo("application/x-www-form-urlencoded"));
+            Assert.That(_builder.WithName("name").WithHref(new Uri("http://href")).WithField(new FieldBuilder().WithName("name")).Build().Type, Is.EqualTo("application/x-www-form-urlencoded"));
         }
 
         [Test]
         public void field_is_optional()
         {
-            Assert.That(_builder.WithName("name").WithHref("href").Build().Fields, Is.Null);
+            Assert.That(_builder.WithName("name").WithHref(new Uri("http://href")).Build().Fields, Is.Null);
         }
 
         [Test]
         public void fields_must_have_unique_names()
         {
-            Assert.That(Assert.Throws<ArgumentException>(() => _builder.WithName("name").WithHref("href").WithField(new FieldBuilder().WithName("name")).WithField(new FieldBuilder().WithName("name")).Build()).Message, Is.EqualTo("Field names MUST be unique within the set of fields for an action."));
+            Assert.That(Assert.Throws<ArgumentException>(() => _builder.WithName("name").WithHref(new Uri("http://href")).WithField(new FieldBuilder().WithName("name")).WithField(new FieldBuilder().WithName("name")).Build()).Message, Is.EqualTo("Field names MUST be unique within the set of fields for an action."));
         }
     }
 }

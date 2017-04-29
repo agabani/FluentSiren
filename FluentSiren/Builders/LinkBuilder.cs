@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using FluentSiren.Enums;
 using FluentSiren.Models;
 
 namespace FluentSiren.Builders
@@ -13,13 +14,13 @@ namespace FluentSiren.Builders
         where TBuilder : LinkBuilder<TBuilder, TEntity>
         where TEntity : Link
     {
-        private readonly List<string> _rel = new List<string>();
+        private readonly List<Rel> _rel = new List<Rel>();
         private List<string> _class;
-        private string _href;
+        private Uri _href;
         private string _title;
         private string _type;
 
-        public TBuilder WithRel(string rel)
+        public TBuilder WithRel(Rel rel)
         {
             _rel.Add(rel);
             return This;
@@ -34,7 +35,7 @@ namespace FluentSiren.Builders
             return This;
         }
 
-        public TBuilder WithHref(string href)
+        public TBuilder WithHref(Uri href)
         {
             _href = href;
             return This;
@@ -57,16 +58,16 @@ namespace FluentSiren.Builders
             if (!_rel.Any())
                 throw new ArgumentException("Rel is required.");
 
-            if (string.IsNullOrEmpty(_href))
+            if (_href == null)
             {
                 throw new ArgumentException("Href is required.");
             }
 
             return (TEntity) new Link
             {
-                Rel = _rel.ToArray(),
+                Rel = _rel.Select(x => x.GetName()).ToArray(),
                 Class = _class?.ToArray(),
-                Href = _href,
+                Href = _href.ToString(),
                 Title = _title,
                 Type = _type
             };

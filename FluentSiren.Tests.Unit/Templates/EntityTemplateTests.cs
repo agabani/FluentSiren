@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Linq;
 using FluentSiren.Builders;
+using FluentSiren.Enums;
 using FluentSiren.Models;
 using FluentSiren.Templates;
 using NUnit.Framework;
@@ -54,9 +55,9 @@ namespace FluentSiren.Tests.Unit.Templates
 
             Assert.IsInstanceOf<EmbeddedRepresentationBuilder>(builder);
 
-            var entity = builder.WithRel("rel").Build();
+            var entity = builder.WithRel(Rel.Item).Build();
 
-            Assert.That(entity.Rel.Single(), Is.EqualTo("rel"));
+            Assert.That(entity.Rel.Single(), Is.EqualTo("item"));
             Assert.That(entity.Properties["id"], Is.EqualTo(_person.Id));
             Assert.That(entity.Properties["name"], Is.EqualTo(_person.Name));
             Assert.That(entity.Properties["date.of.birth"], Is.EqualTo(_person.DateOfBirth));

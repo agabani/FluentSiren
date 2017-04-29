@@ -1,0 +1,183 @@
+﻿using System;
+using System.Collections.Generic;
+using System.Text;
+
+namespace FluentSiren.Enums
+{
+    internal static class RelExtension
+    {
+        internal static string GetName(this Rel? method)
+        {
+            return method?.GetName();
+        }
+
+        internal static string GetName(this Rel rel)
+        {
+            switch (rel)
+            {
+                case Rel.About:
+                    return "about";
+                case Rel.Alternate:
+                    return "alternate";
+                case Rel.Appendix:
+                    return "appendix";
+                case Rel.Archives:
+                    return "archives";
+                case Rel.Author:
+                    return "author";
+                case Rel.BlockedBy:
+                    return "blocked-by";
+                case Rel.Bookmark:
+                    return "bookmark";
+                case Rel.Canonical:
+                    return "canonical";
+                case Rel.Chapter:
+                    return "chapter";
+                case Rel.Collection:
+                    return "collection";
+                case Rel.Contents:
+                    return "contents";
+                case Rel.ConvertedFrom:
+                    return "convertedFrom";
+                case Rel.Copyright:
+                    return "copyright";
+                case Rel.CreateForm:
+                    return "create-form";
+                case Rel.Current:
+                    return "current";
+                case Rel.Derivedfrom:
+                    return "derivedfrom";
+                case Rel.Describedby:
+                    return "describedby";
+                case Rel.Describes:
+                    return "describes";
+                case Rel.Disclosure:
+                    return "disclosure";
+                case Rel.DnsPrefetch:
+                    return "dns-prefetch";
+                case Rel.Duplicate:
+                    return "duplicate";
+                case Rel.Edit:
+                    return "edit";
+                case Rel.EditForm:
+                    return "edit-form";
+                case Rel.EditMedia:
+                    return "edit-media";
+                case Rel.Enclosure:
+                    return "enclosure";
+                case Rel.First:
+                    return "first";
+                case Rel.Glossary:
+                    return "glossary";
+                case Rel.Help:
+                    return "help";
+                case Rel.Hosts:
+                    return "hosts";
+                case Rel.Hub:
+                    return "hub";
+                case Rel.Icon:
+                    return "icon";
+                case Rel.Index:
+                    return "index";
+                case Rel.Item:
+                    return "item";
+                case Rel.Last:
+                    return "last";
+                case Rel.LatestVersion:
+                    return "latest-version";
+                case Rel.License:
+                    return "license";
+                case Rel.Lrdd:
+                    return "lrdd";
+                case Rel.Memento:
+                    return "memento";
+                case Rel.Monitor:
+                    return "monitor";
+                case Rel.MonitorGroup:
+                    return "monitor-group";
+                case Rel.Next:
+                    return "next";
+                case Rel.NextArchive:
+                    return "next-archive";
+                case Rel.Nofollow:
+                    return "nofollow";
+                case Rel.Noreferrer:
+                    return "noreferrer";
+                case Rel.Original:
+                    return "original";
+                case Rel.Payment:
+                    return "payment";
+                case Rel.Pingback:
+                    return "pingback";
+                case Rel.Preconnect:
+                    return "preconnect";
+                case Rel.PredecessorVersion:
+                    return "predecessor-version";
+                case Rel.Prefetch:
+                    return "prefetch";
+                case Rel.Preload:
+                    return "preload";
+                case Rel.Prerender:
+                    return "prerender";
+                case Rel.Prev:
+                    return "prev";
+                case Rel.Preview:
+                    return "preview";
+                case Rel.Previous:
+                    return "previous";
+                case Rel.PrevArchive:
+                    return "prev-archive";
+                case Rel.PrivacyPolicy:
+                    return "privacy-policy";
+                case Rel.Profile:
+                    return "profile";
+                case Rel.Related:
+                    return "related";
+                case Rel.Restconf:
+                    return "restconf";
+                case Rel.Replies:
+                    return "replies";
+                case Rel.Search:
+                    return "search";
+                case Rel.Section:
+                    return "section";
+                case Rel.Self:
+                    return "self";
+                case Rel.Service:
+                    return "service";
+                case Rel.Start:
+                    return "start";
+                case Rel.Stylesheet:
+                    return "stylesheet";
+                case Rel.Subsection:
+                    return "subsection";
+                case Rel.SuccessorVersion:
+                    return "successor-version";
+                case Rel.Tag:
+                    return "tag";
+                case Rel.TermsOfService:
+                    return "terms-of-service";
+                case Rel.Timegate:
+                    return "timegate";
+                case Rel.Timemap:
+                    return "timemap";
+                case Rel.Type:
+                    return "type";
+                case Rel.Up:
+                    return "up";
+                case Rel.VersionHistory:
+                    return "version-history";
+                case Rel.Via:
+                    return "via";
+                case Rel.Webmention:
+                    return "webmention";
+                case Rel.WorkingCopy:
+                    return "working-copy";
+                case Rel.WorkingCopyOf:
+                    return "working-copy-of";
+                default:
+                    throw new ArgumentOutOfRangeException(nameof(rel), rel, null);
+            }
+        }
+    }
+}

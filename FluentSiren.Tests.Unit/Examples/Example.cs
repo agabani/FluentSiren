@@ -1,9 +1,11 @@
-﻿using System;
+﻿/*using System;
 using FluentSiren.Builders;
+using FluentSiren.Enums;
 using FluentSiren.Tests.Unit.Schema;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Serialization;
 using NUnit.Framework;
+using Type = FluentSiren.Enums.Type;
 
 namespace FluentSiren.Tests.Unit.Examples
 {
@@ -35,19 +37,19 @@ namespace FluentSiren.Tests.Unit.Examples
                 .WithAction(new ActionBuilder()
                     .WithName("add-item")
                     .WithTitle("Add Item")
-                    .WithMethod("POST")
+                    .WithMethod(Method.Post)
                     .WithHref("http://api.x.io/orders/42/items")
                     .WithType("application/x-www-form-urlencoded")
                     .WithField(new FieldBuilder()
                         .WithName("orderNumber")
-                        .WithType("hidden")
+                        .WithType(Type.Hidden)
                         .WithValue("42"))
                     .WithField(new FieldBuilder()
                         .WithName("productCode")
-                        .WithType("text"))
+                        .WithType(Type.Text))
                     .WithField(new FieldBuilder()
                         .WithName("quantity")
-                        .WithType("number")))
+                        .WithType(Type.Number)))
                 .WithLink(new LinkBuilder()
                     .WithRel("self")
                     .WithHref("http://api.x.io/orders/42"))
@@ -70,4 +72,4 @@ namespace FluentSiren.Tests.Unit.Examples
             Console.WriteLine(json);
         }
     }
-}
+}*/

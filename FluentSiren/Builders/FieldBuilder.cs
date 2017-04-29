@@ -1,7 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using FluentSiren.Enums;
 using FluentSiren.Models;
+using Type = FluentSiren.Enums.Type;
 
 namespace FluentSiren.Builders
 {
@@ -15,7 +17,7 @@ namespace FluentSiren.Builders
     {
         private string _name;
         private List<string> _class;
-        private string _type;
+        private Type? _type;
         private object _value;
         private string _title;
 
@@ -34,14 +36,12 @@ namespace FluentSiren.Builders
             return This;
         }
 
-        // TODO: "hidden", "text", "search", "tel", "url", "email", "password", "datetime", "date", "month", "week", "time", "datetime-local", "number", "range", "color", "checkbox", "radio", "file"
-        public TBuilder WithType(string type)
+        public TBuilder WithType(Type type)
         {
             _type = type;
             return This;
         }
 
-        // TODO: "string", "number", "FieldValueObject"
         public TBuilder WithValue(object value)
         {
             _value = value;
@@ -75,7 +75,7 @@ namespace FluentSiren.Builders
             {
                 Name = _name,
                 Class = _class?.ToArray(),
-                Type = !string.IsNullOrEmpty(_type) ? _type : "text",
+                Type = _type.GetName() ?? Type.Text.GetName(),
                 Value = _value is List<FieldValueBuilder> ? ((List<FieldValueBuilder>) _value).Select(x => x.Build()).ToArray() : _value,
                 Title = _title
             };

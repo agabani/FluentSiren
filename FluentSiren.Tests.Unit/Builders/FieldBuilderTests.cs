@@ -3,6 +3,7 @@ using System.Linq;
 using FluentSiren.Builders;
 using FluentSiren.Models;
 using NUnit.Framework;
+using Type = FluentSiren.Enums.Type;
 
 namespace FluentSiren.Tests.Unit.Builders
 {
@@ -31,14 +32,14 @@ namespace FluentSiren.Tests.Unit.Builders
                 .WithName("name")
                 .WithClass("class 1")
                 .WithClass("class 2")
-                .WithType("type")
+                .WithType(Type.Hidden)
                 .WithValue("value")
                 .WithTitle("title")
                 .Build();
 
             Assert.That(field.Name, Is.EqualTo("name"));
             Assert.That(field.Class.Select(x => x), Is.EqualTo(new[] {"class 1", "class 2"}));
-            Assert.That(field.Type, Is.EqualTo("type"));
+            Assert.That(field.Type, Is.EqualTo("hidden"));
             Assert.That(field.Value, Is.EqualTo("value"));
             Assert.That(field.Title, Is.EqualTo("title"));
         }

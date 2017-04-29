@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using FluentSiren.Enums;
 using Action = FluentSiren.Models.Action;
 
 namespace FluentSiren.Builders
@@ -13,13 +14,13 @@ namespace FluentSiren.Builders
         where TBuilder : ActionBuilder<TBuilder, TEntity>
         where TEntity : Action
     {
-        private string _name;
         private List<string> _class;
-        private string _method;
-        private string _href;
+        private List<FieldBuilder> _fieldBuilders;
+        private Uri _href;
+        private Method? _method;
+        private string _name;
         private string _title;
         private string _type;
-        private List<FieldBuilder> _fieldBuilders;
 
         public TBuilder WithName(string name)
         {
@@ -36,15 +37,13 @@ namespace FluentSiren.Builders
             return This;
         }
 
-        // TODO: "DELETE", "GET", "PATCH", "POST", "PUT"
-        public TBuilder WithMethod(string method)
+        public TBuilder WithMethod(Method method)
         {
             _method = method;
             return This;
         }
 
-        // TODO: public TBuilder WithHref(Uri href)
-        public TBuilder WithHref(string href)
+        public TBuilder WithHref(Uri href)
         {
             _href = href;
             return This;
@@ -76,15 +75,15 @@ namespace FluentSiren.Builders
             if (string.IsNullOrEmpty(_name))
                 throw new ArgumentException("Name is required.");
 
-            if (string.IsNullOrEmpty(_href))
+            if (_href == null)
                 throw new ArgumentException("Href is required.");
 
             var action = new Action
             {
                 Name = _name,
                 Class = _class?.ToArray(),
-                Method = !string.IsNullOrEmpty(_method) ? _method : "GET",
-                Href = _href,
+                Method = _method.GetName() ?? Method.Get.GetName(),
+                Href = _href.ToString(),
                 Title = _title,
                 Type = !string.IsNullOrEmpty(_type) ? _type : _fieldBuilders != null ? "application/x-www-form-urlencoded" : null,
                 Fields = _fieldBuilders?.Select(x => x.Build()).ToArray()

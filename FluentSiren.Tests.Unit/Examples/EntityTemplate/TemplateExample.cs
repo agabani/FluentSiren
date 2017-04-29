@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using FluentSiren.Builders;
+using FluentSiren.Enums;
 using FluentSiren.Models;
 using FluentSiren.Templates;
 using NUnit.Framework;
@@ -30,7 +31,7 @@ namespace FluentSiren.Tests.Unit.Examples.EntityTemplate
                 .WithProperty("count", items.Count);
 
             foreach (var item in items)
-                entity.WithSubEntity(template.ToRepresentation(item).WithRel("item"));
+                entity.WithSubEntity(template.ToRepresentation(item).WithRel(Rel.Item));
 
             entity.Build();
         }

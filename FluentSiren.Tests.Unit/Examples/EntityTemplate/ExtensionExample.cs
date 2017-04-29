@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using FluentSiren.Builders;
+using FluentSiren.Enums;
 using FluentSiren.Models;
 using NUnit.Framework;
 
@@ -26,7 +27,7 @@ namespace FluentSiren.Tests.Unit.Examples.EntityTemplate
                 .WithProperty("count", items.Count);
 
             foreach (var item in items)
-                entity.WithSubEntity(item.ToRepresentation().WithRel("item"));
+                entity.WithSubEntity(item.ToRepresentation().WithRel(Rel.Item));
 
             entity.Build();
         }

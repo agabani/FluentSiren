@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using FluentSiren.Enums;
 using FluentSiren.Models;
 
 namespace FluentSiren.Builders
@@ -13,12 +14,12 @@ namespace FluentSiren.Builders
         where TBuilder : EmbeddedRepresentationBuilder<TBuilder, TEntity>
         where TEntity : Entity
     {
-        private List<string> _rel;
+        private List<Rel> _rel;
 
-        public TBuilder WithRel(string rel)
+        public TBuilder WithRel(Rel rel)
         {
             if (_rel == null)
-                _rel = new List<string>();
+                _rel = new List<Rel>();
 
             _rel.Add(rel);
             return This;
@@ -32,7 +33,7 @@ namespace FluentSiren.Builders
             var subEntity = new Entity
             {
                 Class = Class?.ToArray(),
-                Rel = _rel?.ToArray(),
+                Rel = _rel?.Select(x => x.GetName()).ToArray(),
                 Properties = Properties?.ToDictionary(kvp => kvp.Key, kvp => kvp.Value),
                 Entities = SubEntityBuilders?.Select(x => x.Build()).ToArray(),
                 Links = LinkBuilders?.Select(x => x.Build()).ToArray(),

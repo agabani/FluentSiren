@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Linq;
 using FluentSiren.Builders;
+using FluentSiren.Enums;
 using NUnit.Framework;
 
 namespace FluentSiren.Tests.Unit.Builders
@@ -19,18 +20,18 @@ namespace FluentSiren.Tests.Unit.Builders
         public void it_can_build()
         {
             var link = _builder
-                .WithRel("rel 1")
-                .WithRel("rel 2")
+                .WithRel(Rel.Item)
+                .WithRel(Rel.First)
                 .WithClass("class 1")
                 .WithClass("class 2")
-                .WithHref("href")
+                .WithHref(new Uri("http://href"))
                 .WithTitle("title")
                 .WithType("type")
                 .Build();
 
-            Assert.That(link.Rel.Select(x => x), Is.EqualTo(new[] { "rel 1", "rel 2" }));
+            Assert.That(link.Rel.Select(x => x), Is.EqualTo(new[] { "item", "first" }));
             Assert.That(link.Class.Select(x => x), Is.EqualTo(new[] { "class 1", "class 2" }));
-            Assert.That(link.Href, Is.EqualTo("href"));
+            Assert.That(link.Href, Is.EqualTo("http://href/"));
             Assert.That(link.Title, Is.EqualTo("title"));
             Assert.That(link.Type, Is.EqualTo("type"));
         }
@@ -39,8 +40,8 @@ namespace FluentSiren.Tests.Unit.Builders
         public void it_does_not_share_references()
         {
             _builder
-                .WithRel("rel")
-                .WithHref("href")
+                .WithRel(Rel.Item)
+                .WithHref(new Uri("http://href"))
                 .WithClass("class");
 
             var link1 = _builder.Build();
@@ -54,31 +55,31 @@ namespace FluentSiren.Tests.Unit.Builders
         [Test]
         public void rel_is_required()
         {
-            Assert.That(Assert.Throws<ArgumentException>(() => _builder.WithHref("href").Build()).Message, Is.EqualTo("Rel is required."));
+            Assert.That(Assert.Throws<ArgumentException>(() => _builder.WithHref(new Uri("http://href")).Build()).Message, Is.EqualTo("Rel is required."));
         }
 
         [Test]
         public void class_is_optional()
         {
-            Assert.That(_builder.WithRel("rel").WithHref("href").Build().Class, Is.Null);
+            Assert.That(_builder.WithRel(Rel.Item).WithHref(new Uri("http://href")).Build().Class, Is.Null);
         }
 
         [Test]
         public void href_is_required()
         {
-            Assert.That(Assert.Throws<ArgumentException>(() => _builder.WithRel("rel").Build()).Message, Is.EqualTo("Href is required."));
+            Assert.That(Assert.Throws<ArgumentException>(() => _builder.WithRel(Rel.Item).Build()).Message, Is.EqualTo("Href is required."));
         }
 
         [Test]
         public void title_is_optional()
         {
-            Assert.That(_builder.WithRel("rel").WithHref("href").Build().Title, Is.Null);
+            Assert.That(_builder.WithRel(Rel.Item).WithHref(new Uri("http://href")).Build().Title, Is.Null);
         }
 
         [Test]
         public void type_is_optional()
         {
-            Assert.That(_builder.WithRel("rel").WithHref("href").Build().Type, Is.Null);
+            Assert.That(_builder.WithRel(Rel.Item).WithHref(new Uri("http://href")).Build().Type, Is.Null);
         }
     }
 }

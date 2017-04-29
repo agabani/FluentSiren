@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Linq;
 using FluentSiren.Builders;
+using FluentSiren.Enums;
 using NUnit.Framework;
 
 namespace FluentSiren.Tests.Unit.Builders
@@ -25,20 +26,20 @@ namespace FluentSiren.Tests.Unit.Builders
                 .WithTitle("title")
                 .WithProperty("key 1", "value 1")
                 .WithProperty("key 2", "value 2")
-                .WithSubEntity(new EmbeddedLinkBuilder().WithRel("rel 1").WithHref("href"))
-                .WithSubEntity(new EmbeddedLinkBuilder().WithRel("rel 2").WithHref("href"))
-                .WithSubEntity(new EmbeddedRepresentationBuilder().WithRel("rel 3"))
-                .WithSubEntity(new EmbeddedRepresentationBuilder().WithRel("rel 4"))
-                .WithLink(new LinkBuilder().WithRel("rel 1").WithHref("href"))
-                .WithLink(new LinkBuilder().WithRel("rel 2").WithHref("href"))
-                .WithAction(new ActionBuilder().WithName("name 1").WithHref("href"))
-                .WithAction(new ActionBuilder().WithName("name 2").WithHref("href"))
+                .WithSubEntity(new EmbeddedLinkBuilder().WithRel(Rel.Item).WithHref(new Uri("http://href")))
+                .WithSubEntity(new EmbeddedLinkBuilder().WithRel(Rel.First).WithHref(new Uri("http://href")))
+                .WithSubEntity(new EmbeddedRepresentationBuilder().WithRel(Rel.Index))
+                .WithSubEntity(new EmbeddedRepresentationBuilder().WithRel(Rel.About))
+                .WithLink(new LinkBuilder().WithRel(Rel.Item).WithHref(new Uri("http://href")))
+                .WithLink(new LinkBuilder().WithRel(Rel.First).WithHref(new Uri("http://href")))
+                .WithAction(new ActionBuilder().WithName("name 1").WithHref(new Uri("http://href")))
+                .WithAction(new ActionBuilder().WithName("name 2").WithHref(new Uri("http://href")))
                 .Build();
 
             Assert.That(entity.Class.Select(x => x), Is.EqualTo(new[] {"class 1", "class 2"}));
             Assert.That(entity.Properties.Select(x => $"{x.Key}:{x.Value}"), Is.EqualTo(new[] {"key 1:value 1", "key 2:value 2"}));
-            Assert.That(entity.Entities.Select(x => x.Rel.Single()), Is.EqualTo(new[] {"rel 1", "rel 2", "rel 3", "rel 4"}));
-            Assert.That(entity.Links.Select(x => x.Rel.Single()), Is.EqualTo(new[] {"rel 1", "rel 2"}));
+            Assert.That(entity.Entities.Select(x => x.Rel.Single()), Is.EqualTo(new[] { "item", "first", "index", "about" }));
+            Assert.That(entity.Links.Select(x => x.Rel.Single()), Is.EqualTo(new[] { "item", "first" }));
             Assert.That(entity.Actions.Select(x => x.Name), Is.EqualTo(new[] {"name 1", "name 2"}));
             Assert.That(entity.Title, Is.EqualTo("title"));
         }
@@ -49,9 +50,9 @@ namespace FluentSiren.Tests.Unit.Builders
             _builder
                 .WithClass("class")
                 .WithProperty("key", "value")
-                .WithSubEntity(new EmbeddedRepresentationBuilder().WithRel("rel"))
-                .WithLink(new LinkBuilder().WithRel("rel").WithHref("href"))
-                .WithAction(new ActionBuilder().WithName("name").WithHref("href"));
+                .WithSubEntity(new EmbeddedRepresentationBuilder().WithRel(Rel.Item))
+                .WithLink(new LinkBuilder().WithRel(Rel.Item).WithHref(new Uri("http://href")))
+                .WithAction(new ActionBuilder().WithName("name").WithHref(new Uri("http://href")));
 
             var entity1 = _builder.Build();
             var entity2 = _builder.Build();
@@ -102,7 +103,7 @@ namespace FluentSiren.Tests.Unit.Builders
         [Test]
         public void actions_must_have_unique_names()
         {
-            Assert.That(Assert.Throws<ArgumentException>(() => _builder.WithAction(new ActionBuilder().WithName("name").WithHref("href")).WithAction(new ActionBuilder().WithName("name").WithHref("href")).Build()).Message, Is.EqualTo("Action names MUST be unique within the set of actions for an entity."));
+            Assert.That(Assert.Throws<ArgumentException>(() => _builder.WithAction(new ActionBuilder().WithName("name").WithHref(new Uri("http://href"))).WithAction(new ActionBuilder().WithName("name").WithHref(new Uri("http://href"))).Build()).Message, Is.EqualTo("Action names MUST be unique within the set of actions for an entity."));
         }
     }
 }

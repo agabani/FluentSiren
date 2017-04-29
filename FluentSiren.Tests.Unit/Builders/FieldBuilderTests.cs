@@ -1,6 +1,8 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using FluentSiren.Builders;
+using FluentSiren.Models;
 using NUnit.Framework;
 
 namespace FluentSiren.Tests.Unit.Builders
@@ -105,6 +107,12 @@ namespace FluentSiren.Tests.Unit.Builders
         }
 
         [Test]
+        public void value_can_be_a_field_value()
+        {
+            Assert.That(((FieldValue[]) _builder.WithName("name").WithValue(new FieldValueBuilder().WithValue("value")).Build().Value).Single().Value, Is.EqualTo("value"));
+        }
+
+        [Test]
         public void title_is_optional()
         {
             Assert.That(_builder.WithName("name").Build().Title, Is.Null);
@@ -113,13 +121,13 @@ namespace FluentSiren.Tests.Unit.Builders
         [Test]
         public void value_can_not_be_a_bool()
         {
-            Assert.That(Assert.Throws<ArgumentException>(() => _builder.WithName("name").WithValue(true).Build()).Message, Is.EqualTo("Value must be a string or a number."));
+            Assert.That(Assert.Throws<ArgumentException>(() => _builder.WithName("name").WithValue(true).Build()).Message, Is.EqualTo("Value must be a string, a number, or a list of field values."));
         }
 
         [Test]
         public void value_can_not_be_an_object()
         {
-            Assert.That(Assert.Throws<ArgumentException>(() => _builder.WithName("name").WithValue(new object()).Build()).Message, Is.EqualTo("Value must be a string or a number."));
+            Assert.That(Assert.Throws<ArgumentException>(() => _builder.WithName("name").WithValue(new object()).Build()).Message, Is.EqualTo("Value must be a string, a number, or a list of field values."));
         }
     }
 }

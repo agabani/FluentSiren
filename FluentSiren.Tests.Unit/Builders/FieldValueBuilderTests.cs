@@ -39,8 +39,8 @@ namespace FluentSiren.Tests.Unit.Builders
         [Test]
         public void it_does_not_share_references()
         {
-            var fieldValue1 = _builder.WithValue("").Build();
-            var fieldValue2 = _builder.WithValue("").Build();
+            var fieldValue1 = _builder.WithValue("value").Build();
+            var fieldValue2 = _builder.WithValue("value").Build();
 
             Assert.That(fieldValue1, Is.Not.SameAs(fieldValue2));
         }
@@ -48,7 +48,7 @@ namespace FluentSiren.Tests.Unit.Builders
         [Test]
         public void title_is_optional()
         {
-            Assert.That(_builder.WithValue("").Build().Title, Is.Null);
+            Assert.That(_builder.WithValue("value").Build().Title, Is.Null);
         }
 
         [Test]
@@ -60,7 +60,7 @@ namespace FluentSiren.Tests.Unit.Builders
         [Test]
         public void selected_is_optional_and_defaults_to_false()
         {
-            Assert.That(_builder.WithValue("").Build().Selected, Is.False);
+            Assert.That(_builder.WithValue("value").Build().Selected, Is.False);
         }
 
         [Test]

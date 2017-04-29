@@ -4,6 +4,8 @@ __Current specification version: 0.6.1__
 
 - [Offical Siren Specification](https://github.com/kevinswiber/siren)
 
+[![Build status](https://ci.appveyor.com/api/projects/status/wjsu38ekwr5593r3/branch/master?svg=true)](https://ci.appveyor.com/project/AhmedAgabani/fluentsiren/branch/master)
+
 |Package                  |Version                                                                                                                             |
 |-------------------------|------------------------------------------------------------------------------------------------------------------------------------|
 |FluentSiren              |[![NuGet downloads](https://img.shields.io/badge/nuget-v0.6.1.5-blue.svg)](https://www.nuget.org/packages/FluentSiren)              |

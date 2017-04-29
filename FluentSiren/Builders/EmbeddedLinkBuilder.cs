@@ -15,7 +15,7 @@ namespace FluentSiren.Builders
         where TEntity : Entity
     {
         private List<string> _class;
-        private List<Rel> _rel;
+        private readonly List<object> _rel = new List<object>();
         private Uri _href;
         private string _type;
         private string _title;
@@ -29,11 +29,14 @@ namespace FluentSiren.Builders
             return This;
         }
 
+        public TBuilder WithRel(Uri rel)
+        {
+            _rel.Add(rel);
+            return This;
+        }
+
         public TBuilder WithRel(Rel rel)
         {
-            if (_rel == null)
-                _rel = new List<Rel>();
-
             _rel.Add(rel);
             return This;
         }
@@ -58,7 +61,7 @@ namespace FluentSiren.Builders
 
         public override TEntity Build()
         {
-            if (_rel == null || !_rel.Any())
+            if (!_rel.Any())
                 throw new ArgumentException("Rel is required.");
 
             if (_href == null)
@@ -67,7 +70,7 @@ namespace FluentSiren.Builders
             return (TEntity) new Entity
             {
                 Class = _class?.ToArray(),
-                Rel = _rel?.Select(x => x.GetName()).ToArray(),
+                Rel = _rel.Select(x => x is Rel ? ((Rel) x).GetName() : ((Uri) x).ToString()).ToArray(),
                 Href = _href.ToString(),
                 Type = _type,
                 Title = _title

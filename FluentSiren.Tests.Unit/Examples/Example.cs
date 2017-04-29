@@ -1,4 +1,4 @@
-﻿/*using System;
+﻿using System;
 using FluentSiren.Builders;
 using FluentSiren.Enums;
 using FluentSiren.Tests.Unit.Schema;
@@ -23,22 +23,22 @@ namespace FluentSiren.Tests.Unit.Examples
                 .WithSubEntity(new EmbeddedLinkBuilder()
                     .WithClass("items")
                     .WithClass("collection")
-                    .WithRel("http://x.io/rels/order-items")
-                    .WithHref("http://api.x.io/orders/42/items"))
+                    .WithRel(new Uri("http://x.io/rels/order-items"))
+                    .WithHref(new Uri("http://api.x.io/orders/42/items")))
                 .WithSubEntity(new EmbeddedRepresentationBuilder()
                     .WithClass("info")
                     .WithClass("customer")
-                    .WithRel("http://x.io/rels/customer")
+                    .WithRel(new Uri("http://x.io/rels/customer"))
                     .WithProperty("customerId", "pj123")
                     .WithProperty("name", "Peter Joseph")
                     .WithLink(new LinkBuilder()
-                        .WithRel("self")
-                        .WithHref("http://api.x.io/customers/pj123")))
+                        .WithRel(Rel.Self)
+                        .WithHref(new Uri("http://api.x.io/customers/pj123"))))
                 .WithAction(new ActionBuilder()
                     .WithName("add-item")
                     .WithTitle("Add Item")
                     .WithMethod(Method.Post)
-                    .WithHref("http://api.x.io/orders/42/items")
+                    .WithHref(new Uri("http://api.x.io/orders/42/items"))
                     .WithType("application/x-www-form-urlencoded")
                     .WithField(new FieldBuilder()
                         .WithName("orderNumber")
@@ -51,14 +51,14 @@ namespace FluentSiren.Tests.Unit.Examples
                         .WithName("quantity")
                         .WithType(Type.Number)))
                 .WithLink(new LinkBuilder()
-                    .WithRel("self")
-                    .WithHref("http://api.x.io/orders/42"))
+                    .WithRel(Rel.Self)
+                    .WithHref(new Uri("http://api.x.io/orders/42")))
                 .WithLink(new LinkBuilder()
-                    .WithRel("previous")
-                    .WithHref("http://api.x.io/orders/41"))
+                    .WithRel(Rel.Previous)
+                    .WithHref(new Uri("http://api.x.io/orders/41")))
                 .WithLink(new LinkBuilder()
-                    .WithRel("next")
-                    .WithHref("http://api.x.io/orders/43"))
+                    .WithRel(Rel.Next)
+                    .WithHref(new Uri("http://api.x.io/orders/43")))
                 .Build();
 
             var json = JsonConvert.SerializeObject(entity, Formatting.Indented, new JsonSerializerSettings
@@ -72,4 +72,4 @@ namespace FluentSiren.Tests.Unit.Examples
             Console.WriteLine(json);
         }
     }
-}*/
+}

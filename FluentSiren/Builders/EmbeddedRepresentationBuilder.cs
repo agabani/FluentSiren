@@ -14,26 +14,29 @@ namespace FluentSiren.Builders
         where TBuilder : EmbeddedRepresentationBuilder<TBuilder, TEntity>
         where TEntity : Entity
     {
-        private List<Rel> _rel;
+        private readonly List<object> _rel = new List<object>();
+
+        public TBuilder WithRel(Uri rel)
+        {
+            _rel.Add(rel);
+            return This;
+        }
 
         public TBuilder WithRel(Rel rel)
         {
-            if (_rel == null)
-                _rel = new List<Rel>();
-
             _rel.Add(rel);
             return This;
         }
 
         public override TEntity Build()
         {
-            if (_rel == null || !_rel.Any())
+            if (!_rel.Any())
                 throw new ArgumentException("Rel is required.");
 
             var subEntity = new Entity
             {
                 Class = Class?.ToArray(),
-                Rel = _rel?.Select(x => x.GetName()).ToArray(),
+                Rel = _rel.Select(x => x is Rel ? ((Rel)x).GetName() : ((Uri)x).ToString()).ToArray(),
                 Properties = Properties?.ToDictionary(kvp => kvp.Key, kvp => kvp.Value),
                 Entities = SubEntityBuilders?.Select(x => x.Build()).ToArray(),
                 Links = LinkBuilders?.Select(x => x.Build()).ToArray(),

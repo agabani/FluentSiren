@@ -14,11 +14,17 @@ namespace FluentSiren.Builders
         where TBuilder : LinkBuilder<TBuilder, TEntity>
         where TEntity : Link
     {
-        private readonly List<Rel> _rel = new List<Rel>();
+        private readonly List<object> _rel = new List<object>();
         private List<string> _class;
         private Uri _href;
         private string _title;
         private string _type;
+
+        public TBuilder WithRel(Uri rel)
+        {
+            _rel.Add(rel);
+            return This;
+        }
 
         public TBuilder WithRel(Rel rel)
         {
@@ -65,7 +71,7 @@ namespace FluentSiren.Builders
 
             return (TEntity) new Link
             {
-                Rel = _rel.Select(x => x.GetName()).ToArray(),
+                Rel = _rel.Select(x => x is Rel ? ((Rel)x).GetName() : ((Uri)x).ToString()).ToArray(),
                 Class = _class?.ToArray(),
                 Href = _href.ToString(),
                 Title = _title,

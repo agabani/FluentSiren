@@ -1,5 +1,7 @@
 # FluentSiren: A fluent API to build specification enforced siren entities.
 
+# Pipeline test
+
 __Current specification version: 0.6.1__
 
 - [Offical Siren Specification](https://github.com/kevinswiber/siren)
